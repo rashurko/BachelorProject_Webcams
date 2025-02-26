@@ -66,4 +66,4 @@ def create_long_exposure(video_filename, subtract_image_path=None, name='long_ex
     return output_image_path
 
 # Example usage
-create_long_exposure("video_20250224_232621.avi", 'results/offset_20250224_232615.png', name = 'long_exposure')
+create_long_exposure("video_20250226_155821.avi", 'results/offset_20250226_155813.png', name = 'long_exposure')

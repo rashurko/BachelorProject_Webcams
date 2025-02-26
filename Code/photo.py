@@ -8,6 +8,11 @@ def capture_photo(name = 'photo', camera_index=0):
     filename = os.path.join(folder, time.strftime(f"{name}_%Y%m%d_%H%M%S.png"))  # Generate timestamped filename
     
     cap = cv2.VideoCapture(camera_index)  # Open the webcam
+
+    # Set resolution to 640x480
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+    
     if not cap.isOpened():
         print("Error: Could not open camera.")
         return

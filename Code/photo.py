@@ -1,16 +1,15 @@
 import cv2
-import time
 import os
 
-def capture_photo(folder, name = 'photo', camera_index=0):
+def capture_photo(folder, width, height, name = 'photo', camera_index=0):
     os.makedirs(folder, exist_ok=True)  # Ensure the folder exists
     filename = os.path.join(folder, name + ".png")  # Generate timestamped filename
     
     cap = cv2.VideoCapture(camera_index)  # Open the webcam
 
-    # Set resolution to 640x480
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+    # Set resolution to width x height
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
     
     if not cap.isOpened():
         print("Error: Could not open camera.")

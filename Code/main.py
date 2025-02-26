@@ -7,12 +7,13 @@ import graphs
 
 name = "cheap_0" + "_" + time.strftime("%Y-%m-%d_%H-%M-%S")
 save_path = "Code/results"
+width, height = 640, 480
 
-photo.capture_photo(save_path, name)
+photo.capture_photo(save_path, width, height, name)
 print("Press ENTER to start recording")
 input()
 
-recording.record_video(save_path, 640, 480, 30, 5, name)
+recording.record_video(save_path, width, height, 30, 5, name)
 
 stacker.create_long_exposure(save_path, name + ".avi", save_path + "/" + name + ".png", "long_" + name)
 

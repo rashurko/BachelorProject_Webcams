@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 import os
-import time
 
 def create_long_exposure(folder, video_filename, subtract_image_path=None, name='long_exposure'):
     # Define folder paths

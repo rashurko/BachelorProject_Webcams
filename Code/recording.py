@@ -2,13 +2,12 @@ import cv2
 import os
 import time
 
-def record_video(frame_width=640, frame_height=480, fps=30, duration=10, name = 'video'):
+def record_video(folder, frame_width=640, frame_height=480, fps=30, duration=10, name = 'video'):
     # Create results folder if it doesn't exist
-    folder = "results"
     os.makedirs(folder, exist_ok=True)
     
     # Generate timestamped filename
-    output_filename = os.path.join(folder, time.strftime(f"{name}_%Y%m%d_%H%M%S.avi"))
+    output_filename = os.path.join(folder, name + ".avi")
     
     # Open the default webcam
     cap = cv2.VideoCapture(0)
@@ -50,5 +49,3 @@ def record_video(frame_width=640, frame_height=480, fps=30, duration=10, name = 
     cv2.destroyAllWindows()
     print("Recording stopped. Video saved as", output_filename)
 
-
-record_video(duration=10)

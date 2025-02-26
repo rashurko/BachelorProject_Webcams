@@ -2,9 +2,9 @@ import cv2
 import numpy as np
 import os
 import matplotlib.pyplot as plt
+from matplotlib.ticker import ScalarFormatter
 
-def plot_pixel_brightness_distribution(video_filename, subtract_image_path = None):
-    folder = "results"
+def plot_pixel_brightness_distribution(folder, video_filename, subtract_image_path=None, name="graph", title="graph"):
     video_path = os.path.join(folder, video_filename)
     cap = cv2.VideoCapture(video_path)
     
@@ -42,17 +42,55 @@ def plot_pixel_brightness_distribution(video_filename, subtract_image_path = Non
             brightness_counts["blue"][i] += np.sum(blue == i)
     
     cap.release()
-    
-    # Plot the brightness distribution
+
+    # Plot the brightness distribution in 3 subplots
     brightness_vals = np.linspace(0, 100, 256)
-    plt.figure(figsize=(10, 5))
-    plt.plot(brightness_vals, brightness_counts["red"], color='red', label='Red', linestyle = '-')
-    plt.plot(brightness_vals, brightness_counts["green"], color='green', label='Green', linestyle = 'dotted')
-    plt.plot(brightness_vals, brightness_counts["blue"], color='blue', label='Blue', linestyle = 'dashed')
-    plt.xlabel("Pixel Brightness")
-    plt.ylabel("Count")
-    plt.title("Pixel Brightness Distribution")
-    plt.legend()
+    fig, axs = plt.subplots(1, 3, figsize=(15, 5))  # 3 rows, 1 column
+    
+    # Red channel plot
+    axs[0].plot(brightness_vals, brightness_counts["red"], color='red', label='Red', linestyle='-', alpha=0.5)
+    axs[0].set_xlabel("Pixel Brightness")
+    axs[0].set_ylabel("Count")
+    axs[0].set_title("Red Channel")
+    axs[0].yaxis.set_major_formatter(ScalarFormatter(useMathText=True))
+
+    # Green channel plot
+    axs[1].plot(brightness_vals, brightness_counts["green"], color='green', label='Green', linestyle='dotted', alpha=0.5)
+    axs[1].set_xlabel("Pixel Brightness")
+    axs[1].set_ylabel("Count")
+    axs[1].set_title("Green Channel")
+    axs[1].yaxis.set_major_formatter(ScalarFormatter(useMathText=True))
+
+    # Blue channel plot
+    axs[2].plot(brightness_vals, brightness_counts["blue"], color='blue', label='Blue', linestyle='dashed', alpha=0.5)
+    axs[2].set_xlabel("Pixel Brightness")
+    axs[2].set_ylabel("Count")
+    axs[2].set_title("Blue Channel")
+    axs[2].yaxis.set_major_formatter(ScalarFormatter(useMathText=True))
+
+    # Adjust the layout and save the figure
+    plt.tight_layout()
+    plt.subplots_adjust(wspace = 0.33)
+    graph_path = os.path.join(folder, f"graph_{name}")
+    plt.savefig(graph_path)
     plt.show()
 
-plot_pixel_brightness_distribution('video_20250226_155047.avi', 'results/offset_20250226_155041.png')
+    # Save pixel brightness counts to a text file
+    txt_file_path = os.path.join(folder, f"data_{name}.txt")
+    with open(txt_file_path, "w") as f:
+        f.write("Pixel Brightness Distribution\n")
+        f.write(f"Title: {title}\n\n")
+        f.write("Red Channel:\n")
+        for i in range(256):
+            f.write(f"{i}: {brightness_counts['red'][i]}\n")
+        
+        f.write("\nGreen Channel:\n")
+        for i in range(256):
+            f.write(f"{i}: {brightness_counts['green'][i]}\n")
+        
+        f.write("\nBlue Channel:\n")
+        for i in range(256):
+            f.write(f"{i}: {brightness_counts['blue'][i]}\n")
+    
+    print(f"Graph saved as {graph_path}")
+    print(f"Data saved as {txt_file_path}")

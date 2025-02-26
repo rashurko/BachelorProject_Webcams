@@ -2,10 +2,9 @@ import cv2
 import time
 import os
 
-def capture_photo(name = 'photo', camera_index=0):
-    folder = "results"
+def capture_photo(folder, name = 'photo', camera_index=0):
     os.makedirs(folder, exist_ok=True)  # Ensure the folder exists
-    filename = os.path.join(folder, time.strftime(f"{name}_%Y%m%d_%H%M%S.png"))  # Generate timestamped filename
+    filename = os.path.join(folder, name + ".png")  # Generate timestamped filename
     
     cap = cv2.VideoCapture(camera_index)  # Open the webcam
 
@@ -26,6 +25,3 @@ def capture_photo(name = 'photo', camera_index=0):
     
     cap.release()  # Release the camera
     cv2.destroyAllWindows()
-
-# Run the function
-capture_photo('offset')

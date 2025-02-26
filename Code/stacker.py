@@ -3,14 +3,13 @@ import numpy as np
 import os
 import time
 
-def create_long_exposure(video_filename, subtract_image_path=None, name='long_exposure'):
+def create_long_exposure(folder, video_filename, subtract_image_path=None, name='long_exposure'):
     # Define folder paths
-    folder = "results"
     os.makedirs(folder, exist_ok=True)
     
     # Input video file from results folder
     video_path = os.path.join(folder, video_filename)
-    output_image_path = os.path.join(folder, time.strftime(f"{name}_%Y%m%d_%H%M%S.png"))
+    output_image_path = os.path.join(folder, name + ".png")
     
     # Open the video file
     cap = cv2.VideoCapture(video_path)
@@ -65,5 +64,3 @@ def create_long_exposure(video_filename, subtract_image_path=None, name='long_ex
     print(f"Long exposure image saved as {output_image_path}")
     return output_image_path
 
-# Example usage
-create_long_exposure("video_20250226_155821.avi", 'results/offset_20250226_155813.png', name = 'long_exposure')

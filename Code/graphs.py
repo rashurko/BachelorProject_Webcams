@@ -49,6 +49,7 @@ def plot_pixel_brightness_distribution(folder, video_filename, subtract_image_pa
     
     # Red channel plot
     axs[0].plot(brightness_vals, brightness_counts["red"], color='red', label='Red', linestyle='-', alpha=0.5)
+    axs[0].set_ylim(0, 60000)
     axs[0].set_xlabel("Pixel Brightness")
     axs[0].set_ylabel("Count")
     axs[0].set_title("Red Channel")
@@ -56,6 +57,7 @@ def plot_pixel_brightness_distribution(folder, video_filename, subtract_image_pa
 
     # Green channel plot
     axs[1].plot(brightness_vals, brightness_counts["green"], color='green', label='Green', linestyle='dotted', alpha=0.5)
+    axs[1].set_ylim(0, 60000)
     axs[1].set_xlabel("Pixel Brightness")
     axs[1].set_ylabel("Count")
     axs[1].set_title("Green Channel")
@@ -63,6 +65,7 @@ def plot_pixel_brightness_distribution(folder, video_filename, subtract_image_pa
 
     # Blue channel plot
     axs[2].plot(brightness_vals, brightness_counts["blue"], color='blue', label='Blue', linestyle='dashed', alpha=0.5)
+    axs[2].set_ylim(0, 60000)
     axs[2].set_xlabel("Pixel Brightness")
     axs[2].set_ylabel("Count")
     axs[2].set_title("Blue Channel")

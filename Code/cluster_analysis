@@ -1,0 +1,34 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def count_distinct_sums(file_path):
+    # Read the file into a DataFrame
+    df = pd.read_csv(file_path, delim_whitespace=True)
+    
+    # Get distinct sum values and their occurrences
+    sum_counts = df['sum'].value_counts().to_dict()
+    
+    return sum_counts
+
+def plot_sum_histogram(sum_counts, save_path, bin_step):
+    # Convert sum occurrences to a list for histogram
+    sums = list(sum_counts.keys())
+    occurrences = list(sum_counts.values())
+    
+    # Create histogram bins
+    bins = range(int(min(sums)), int(max(sums)) + bin_step, bin_step)
+    
+    # Plot histogram
+    plt.figure(figsize=(10, 5))
+    plt.hist(sums, bins=bins, weights=occurrences, edgecolor='black', alpha=0.7)
+    plt.xlabel('Brightness')
+    plt.ylabel('Count')
+    
+    # Save the plot
+    plt.savefig(save_path)
+    plt.close()
+
+
+file_path = 'Code/frames/cheap_0mm_100kV_300µA_2025-02-27_14-18-14/clusters.dat'  # Replace with the actual file path
+sum_occurrences = count_distinct_sums(file_path)
+plot_sum_histogram(sum_occurrences, 'Code/frames/cheap_0mm_100kV_300µA_2025-02-27_14-18-14/sum_occurrences_plot.png', 50)

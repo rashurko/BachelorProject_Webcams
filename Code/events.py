@@ -2,15 +2,10 @@ import cv2
 import glob
 from skimage import measure
 import numpy as np
+import os
 import sys
 
-#base_folder = sys.argv[1]
-base_folder = "Code/frames"
-type = "png"
-output = "clusters.dat"
-
-threshold = 4
-
+threshold = 1
 
 def find_clusters(data):
     clusters = []
@@ -45,7 +40,6 @@ def find_clusters(data):
             cluster[1] += val * y
 
             # gray
-            cluster[2] += 1
             cluster[6] += val
 
             # rgb
@@ -65,25 +59,30 @@ def find_clusters(data):
 
     return np.array(clusters)
 
-folders = sorted(glob.glob(base_folder + '/*'))
-
-for folder in folders:
-    print(folder)
-
+def process_folder(folder, dark_current_image, save_folder, type, output):
     files = sorted(glob.glob(folder + '/*.' + type))
 
-    f_out = open(folder + '/' + output, 'w')
+    # Create results folder in the output directory with the combined folder name
+    parent_folder_name = os.path.basename(os.path.dirname(folder))
+    folder_name = os.path.basename(folder)
+    combined_folder_name = f"{parent_folder_name}"
+    results_folder = os.path.join(save_folder, combined_folder_name)
+    os.makedirs(results_folder, exist_ok=True)
+
+    f_out = open(os.path.join(results_folder, output), 'w')
     f_out.write('# frame\tevent\tcm_x\tcm_y\tsize\tsize_r\tsize_g\tsize_b\tsum\tsum_r\tsum_g\tsum_b\n')
 
     n_frame = 0
 
-    #events = []
     for img in files:
         if not img.endswith(type):
             continue
 
         print('\r' + str(n_frame) + ' / ' + str(len(files)), end="")
         data = cv2.cvtColor(cv2.imread(img), cv2.COLOR_BGR2RGB)
+
+        # Subtract the dark current image from the current frame
+        data = cv2.subtract(data, dark_current_image)
 
         clusters = find_clusters(data)
         n_cluster = 0
@@ -95,7 +94,29 @@ for folder in folders:
             n_cluster += 1
 
         n_frame += 1
-        #events.append(clusters[:,6])
 
     f_out.close()
     print('')
+
+def process_folders(base_folder, save_folder, type, output):
+    folders = sorted(glob.glob(base_folder + '/*' + '/*'))
+
+    for folder in folders:
+        if os.path.basename(folder) != "Result":
+            continue
+
+        print(folder)
+
+        # Load the average dark current image from the results folder
+        parent_folder_name = os.path.basename(os.path.dirname(folder))
+        combined_folder_name = f"{parent_folder_name}"
+        results_folder = os.path.join(save_folder, combined_folder_name)
+        dark_current_image_path = os.path.join(results_folder, 'average_darkcurrent.png')
+        dark_current_image = cv2.imread(dark_current_image_path)
+        if dark_current_image is None:
+            raise ValueError(f"Error: Could not open or find the dark current image at {dark_current_image_path}")
+        dark_current_image = cv2.cvtColor(dark_current_image, cv2.COLOR_BGR2RGB)
+
+        process_folder(folder, dark_current_image, save_folder, type, output)
+
+

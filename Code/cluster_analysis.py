@@ -3,12 +3,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-def count_distinct_sums(file_path):
+def count_distinct_sums(file_path, column='sum'):
     # Read the file into a DataFrame
     df = pd.read_csv(file_path, delim_whitespace=True)
     
+    # Filter out rows with brightness (sum) value of 0
+    df = df[df[column] != 0]
+    
     # Get distinct sum values and their occurrences
-    sum_counts = df['sum'].value_counts().to_dict()
+    sum_counts = df[column].value_counts().to_dict()
     
     return sum_counts
 
@@ -16,20 +19,26 @@ def count_distinct_sizes(file_path):
     # Read the file into a DataFrame
     df = pd.read_csv(file_path, delim_whitespace=True)
     
+    # Filter out rows with brightness (sum) value of 0
+    df = df[df['sum'] != 0]
+    
     # Get distinct size values and their occurrences
     size_counts = df['size'].value_counts().to_dict()
     
     return size_counts
 
-def count_sums_for_given_size(file_path, target_size):
+def count_sums_for_given_size(file_path, target_size, column='sum'):
     # Read the file into a DataFrame
     df = pd.read_csv(file_path, delim_whitespace=True)
+    
+    # Filter out rows with brightness (sum) value of 0
+    df = df[df[column] != 0]
     
     # Filter the DataFrame for the given size
     filtered_df = df[df['size'] == target_size]
     
     # Get distinct sum values and their occurrences for the filtered DataFrame
-    sum_counts = filtered_df['sum'].value_counts().to_dict()
+    sum_counts = filtered_df[column].value_counts().to_dict()
     
     return sum_counts
 
@@ -112,6 +121,17 @@ def plot_size_histogram(size_counts, save_path, bin_step):
     plt.savefig(save_path)
     plt.close()
 
+def save_brightness_occurrences(sum_counts, save_path):
+    # Sort the sum counts by occurrences
+    sorted_sum_counts = sorted(sum_counts.items(), key=lambda item: item[1], reverse=True)
+    
+    # Save the sorted sum counts to a .txt file
+    with open(save_path, 'w') as f:
+        f.write('Brightness\tOccurrences\n')
+        for sum_val, count in sorted_sum_counts:
+            f.write(f'{sum_val}\t{count}\n')
+    print(f"Brightness occurrences saved to {save_path}")
+
 def generate_histograms_for_all_subfolders(base_folder, bin_step, target_size, subfolder_depth=1):
     """
     Generate histograms for every .dat file in all subfolders of the given folder.
@@ -129,23 +149,75 @@ def generate_histograms_for_all_subfolders(base_folder, bin_step, target_size, s
             for file in files:
                 if file.endswith('.dat'):
                     file_path = os.path.join(root, file)
-                    sum_occurrences = count_distinct_sums(file_path)
-                    size_occurrences = count_distinct_sizes(file_path)
-                    filtered_sum_occurrences = count_sums_for_given_size(file_path, target_size)
                     
-                    # Create results folder in the current directory
+                    # Generate and save the histogram plots for sum
+                    sum_occurrences = count_distinct_sums(file_path, column='sum')
+                    size_occurrences = count_distinct_sizes(file_path)
+                    filtered_sum_occurrences = count_sums_for_given_size(file_path, target_size, column='sum')
+                    
                     results_folder = root
                     os.makedirs(results_folder, exist_ok=True)
                     
-                    # Define the save path for the histogram plots
                     sum_save_path = os.path.join(results_folder, f"{os.path.splitext(file)[0]}_sum_occurrences_plot.png")
                     size_save_path = os.path.join(results_folder, f"{os.path.splitext(file)[0]}_size_occurrences_plot.png")
                     filtered_sum_save_path = os.path.join(results_folder, f"{os.path.splitext(file)[0]}_{target_size}px_sum_occurrences_plot.png")
+                    brightness_save_path = os.path.join(results_folder, f"{os.path.splitext(file)[0]}_brightness_occurrences.txt")
                     
-                    # Generate and save the histogram plots
                     plot_sum_histogram(sum_occurrences, sum_save_path, bin_step)
                     plot_size_histogram(size_occurrences, size_save_path, 1)
                     plot_sum_histogram(filtered_sum_occurrences, filtered_sum_save_path, bin_step)
+                    save_brightness_occurrences(sum_occurrences, brightness_save_path)
+                    
                     print(f"Saved histogram for {file_path} to {sum_save_path}")
                     print(f"Saved size histogram for {file_path} to {size_save_path}")
                     print(f"Saved filtered sum histogram for {file_path} to {filtered_sum_save_path}")
+                    print(f"Saved brightness occurrences for {file_path} to {brightness_save_path}")
+                    
+                    # Generate and save the histogram plots for sum_r
+                    sum_r_occurrences = count_distinct_sums(file_path, column='sum_r')
+                    filtered_sum_r_occurrences = count_sums_for_given_size(file_path, target_size, column='sum_r')
+                    
+                    sum_r_save_path = os.path.join(results_folder, f"{os.path.splitext(file)[0]}_sum_r_occurrences_plot.png")
+                    filtered_sum_r_save_path = os.path.join(results_folder, f"{os.path.splitext(file)[0]}_{target_size}px_sum_r_occurrences_plot.png")
+                    brightness_r_save_path = os.path.join(results_folder, f"{os.path.splitext(file)[0]}_brightness_r_occurrences.txt")
+                    
+                    plot_sum_histogram(sum_r_occurrences, sum_r_save_path, bin_step)
+                    plot_sum_histogram(filtered_sum_r_occurrences, filtered_sum_r_save_path, bin_step)
+                    save_brightness_occurrences(sum_r_occurrences, brightness_r_save_path)
+                    
+                    print(f"Saved histogram for {file_path} to {sum_r_save_path}")
+                    print(f"Saved filtered sum histogram for {file_path} to {filtered_sum_r_save_path}")
+                    print(f"Saved brightness occurrences for {file_path} to {brightness_r_save_path}")
+                    
+                    # Generate and save the histogram plots for sum_g
+                    sum_g_occurrences = count_distinct_sums(file_path, column='sum_g')
+                    filtered_sum_g_occurrences = count_sums_for_given_size(file_path, target_size, column='sum_g')
+                    
+                    sum_g_save_path = os.path.join(results_folder, f"{os.path.splitext(file)[0]}_sum_g_occurrences_plot.png")
+                    filtered_sum_g_save_path = os.path.join(results_folder, f"{os.path.splitext(file)[0]}_{target_size}px_sum_g_occurrences_plot.png")
+                    brightness_g_save_path = os.path.join(results_folder, f"{os.path.splitext(file)[0]}_brightness_g_occurrences.txt")
+                    
+                    plot_sum_histogram(sum_g_occurrences, sum_g_save_path, bin_step)
+                    plot_sum_histogram(filtered_sum_g_occurrences, filtered_sum_g_save_path, bin_step)
+                    save_brightness_occurrences(sum_g_occurrences, brightness_g_save_path)
+                    
+                    print(f"Saved histogram for {file_path} to {sum_g_save_path}")
+                    print(f"Saved filtered sum histogram for {file_path} to {filtered_sum_g_save_path}")
+                    print(f"Saved brightness occurrences for {file_path} to {brightness_g_save_path}")
+                    
+                    # Generate and save the histogram plots for sum_b
+                    sum_b_occurrences = count_distinct_sums(file_path, column='sum_b')
+                    filtered_sum_b_occurrences = count_sums_for_given_size(file_path, target_size, column='sum_b')
+                    
+                    sum_b_save_path = os.path.join(results_folder, f"{os.path.splitext(file)[0]}_sum_b_occurrences_plot.png")
+                    filtered_sum_b_save_path = os.path.join(results_folder, f"{os.path.splitext(file)[0]}_{target_size}px_sum_b_occurrences_plot.png")
+                    brightness_b_save_path = os.path.join(results_folder, f"{os.path.splitext(file)[0]}_brightness_b_occurrences.txt")
+                    
+                    plot_sum_histogram(sum_b_occurrences, sum_b_save_path, bin_step)
+                    plot_sum_histogram(filtered_sum_b_occurrences, filtered_sum_b_save_path, bin_step)
+                    save_brightness_occurrences(sum_b_occurrences, brightness_b_save_path)
+                    
+                    print(f"Saved histogram for {file_path} to {sum_b_save_path}")
+                    print(f"Saved filtered sum histogram for {file_path} to {filtered_sum_b_save_path}")
+                    print(f"Saved brightness occurrences for {file_path} to {brightness_b_save_path}")
+

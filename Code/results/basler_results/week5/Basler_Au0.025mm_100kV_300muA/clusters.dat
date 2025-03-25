@@ -1,4 +1,4 @@
-# frame	event	cm_x	cm_y	size	size_r	size_g	size_b	sum	sum_r	sum_g	sum_b
+#frame	event	cm_x	cm_y	size	size_r	size_g	size_b	sum	sum_r	sum_g	sum_b
 0	0	937.5	35.0	2.0	2.0	2.0	0.0	20.0	12.0	8.0	0.0
 0	1	2238.0	69.0	1.0	1.0	0.0	1.0	17.0	7.0	0.0	9.0
 0	2	375.5	93.0	2.0	2.0	2.0	0.0	18.0	12.0	6.0	0.0

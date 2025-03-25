@@ -70,7 +70,7 @@ def process_folder(folder, dark_current_image, save_folder, type, output):
     os.makedirs(results_folder, exist_ok=True)
 
     f_out = open(os.path.join(results_folder, output), 'w')
-    f_out.write('# frame\tevent\tcm_x\tcm_y\tsize\tsize_r\tsize_g\tsize_b\tsum\tsum_r\tsum_g\tsum_b\n')
+    f_out.write('#frame\tevent\tcm_x\tcm_y\tsize\tsize_r\tsize_g\tsize_b\tsum\tsum_r\tsum_g\tsum_b\n')
 
     n_frame = 0
 

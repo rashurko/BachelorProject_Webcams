@@ -214,3 +214,4 @@ These measurements yield the same results, but the peaks are harder to spot as t
 ![trust_regression](Code/brightness_regression/trust/visual_week7_brightness_regression.png)
 
 $E(\text{keV}) = (0.0098 \pm 0.0013)b + (8.6 \pm 1.0)$
+

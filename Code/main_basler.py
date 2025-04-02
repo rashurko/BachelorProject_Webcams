@@ -1,9 +1,10 @@
 import darkcurrent_plot as dp
 import events
 import cluster_analysis as ca
+import cluster_analysis_fixed as ca_fixed
 
-base_folder = 'Code/frames/basler_measurements/week5'  # Replace with the actual base folder path
-output_folder = 'Code/results/basler_results/week5'  # Folder where the plots and .dat files will be saved
+base_folder = 'Code/frames/week7'  # Replace with the actual base folder path
+output_folder = 'Code/results/week7'  # Folder where the plots and .dat files will be saved
 subfolder_depth_dp = 2  # Adjust this value based on the depth of subfolders containing images
 type = "bmp"
 output = "clusters.dat"
@@ -16,4 +17,5 @@ subfolder_depth_ca = 1  # Adjust this value based on the depth of subfolders con
 
 #events.process_folders(base_folder, output_folder, type, output)
 
-ca.generate_histograms_for_all_subfolders(output_folder, bin_step, target_size, subfolder_depth_ca)
+#ca.generate_histograms_for_all_subfolders(output_folder, bin_step, target_size, subfolder_depth_ca)
+ca_fixed.process_all_folders(output_folder, 10)

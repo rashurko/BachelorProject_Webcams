@@ -121,6 +121,8 @@ def plot_size_histogram(size_counts, save_path, bin_step):
     plt.savefig(save_path)
     plt.close()
 
+    
+
 def save_brightness_occurrences(sum_counts, save_path):
     # Sort the sum counts by occurrences
     sorted_sum_counts = sorted(sum_counts.items(), key=lambda item: item[1], reverse=True)

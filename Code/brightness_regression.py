@@ -4,7 +4,7 @@ import os
 import statsmodels.api as sm
 from scipy.stats import t
 
-def linear_regression(x_values, y_values, output_folder, confidence=0.95):
+def linear_regression(x_values, y_values, output_folder, confidence=0.95, name='brightness_regression'):
     # Convert the lists to numpy arrays
     x_values = np.array(x_values)
     y_values = np.array(y_values)
@@ -48,14 +48,25 @@ def linear_regression(x_values, y_values, output_folder, confidence=0.95):
     os.makedirs(output_folder, exist_ok=True)
     
     # Save the plot
-    plot_path = os.path.join(output_folder, 'linear_regression_plot.png')
+    plot_path = os.path.join(output_folder, name + '.png')
     plt.savefig(plot_path)
     plt.close()
     print(f"Plot saved to {plot_path}")
 
-# Example usage
-x_values = [48, 14, 512, 440]  # Replace with your actual x values
-y_values = [9.67, 8.39, 22.16, 17.48]  # Replace with your actual y values
-output_folder = 'Code/brightness_regression/basler'  # Replace with the actual path to your output folder
+    # Save the regression results to a .dat file
+    results_path = os.path.join(output_folder, name + '.dat')
+    with open(results_path, 'w') as f:
+        f.write(f"Slope: {slope}\n")
+        f.write(f"Intercept: {intercept}\n")
+        f.write(f"R-squared: {r_squared}\n")
+        f.write(f"Slope Standard Error: {slope_std_err}\n")
+        f.write(f"Intercept Standard Error: {intercept_std_err}\n")
+        f.write(f"{int(confidence*100)}% Confidence interval: {conf_interval}")
+    print(f"Regression results saved to {results_path}")
 
-linear_regression(x_values, y_values, output_folder, confidence=0.95)
+# Example usage
+x_values = [12, 42, 1259, 1042]  # Replace with your actual x values
+y_values = [8.40, 9.67, 22.16, 17.48]  # Replace with your actual y values
+output_folder = 'Code/brightness_regression/trust'  # Replace with the actual path to your output folder
+
+linear_regression(x_values, y_values, output_folder, confidence=0.95, name='visual_week7_brightness_regression')

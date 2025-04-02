@@ -38,8 +38,8 @@ def process_all_folders(base_folder, file2_path):
                     remove_common_sum_rows(file1_path, file2_path, output_folder, column)
 
 # Example usage
-base_folder = 'Code/results/basler_results/week5'  # Replace with the actual base folder path
-file2_path = 'Code/results/basler_results/week5/Basler_Nothing_100kV_300muA/clusters.dat'
+base_folder = 'Code/results/basler_results/week7/No_Angle'  # Replace with the actual base folder path
+file2_path = 'Code/results/basler_results/week7/No_Angle/Basler_BayerRG12_Nothing_130kV_300muA/clusters.dat'  # Replace with the path to the second .dat file
 process_all_folders(base_folder, file2_path)
 
 

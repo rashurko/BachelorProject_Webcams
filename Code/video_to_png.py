@@ -17,7 +17,7 @@ def extract_frames(video_path, output_folder):
     video_name = os.path.splitext(os.path.basename(video_path))[0]
     
     # Create a new folder in the output directory with the name of the video
-    video_output_folder = os.path.join(output_folder, video_name)
+    video_output_folder = output_folder
     os.makedirs(video_output_folder, exist_ok=True)
     
     # Open the video file
@@ -58,7 +58,7 @@ def extract_frames_from_folder(videos_folder, output_folder):
         extract_frames(video_path, output_folder)
 
 # Example usage
-videos_folder = "Code/results/week4"  # Folder containing video files
-output_folder = "Code/frames/week4"  # Folder where images will be saved
+videos_folder = "Code/frames/week7"  # Folder containing video files
+output_folder = "Code/frames/week7"  # Folder where images will be saved
 
 extract_frames_from_folder(videos_folder, output_folder)

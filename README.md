@@ -138,7 +138,7 @@ with b = brightness.
 
 Setup: similar to week 5, but no measuremnets were taken
 
-Peaks at 48 and 22 due to tungsten, as in week 5. Underneath, we mention only result with "clear" peaks
+Peaks at 48 and 22 due to tungsten, as in week 5. Below, we mention only result with "clear" peaks
 
 #### Ag (sum of r, g and b)
 

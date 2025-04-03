@@ -229,5 +229,8 @@ $E(\text{keV}) = (0.0098 \pm 0.0013)b + (8.6 \pm 1.0)$
 - Recording buffer size: 500 frames
 
 #### Transmission and attenuation
-- l = (59 $\pm$ 1) cm
+- l = (41 $\pm$ 1) cm
+
+#### Reflection
+
 

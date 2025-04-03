@@ -9,7 +9,7 @@
 ### Trust web cam
 - distance x-ray tube - camera = (74 $\pm$ 0.1) cm
 
-### Basler ace U acA2440-35um
+### Basler ace U acA2440-35uc
 - resolution: 2456x2052
 - Pixel Format: Mono 8 - not really useful as it is achieved via an algorithm (https://docs.baslerweb.com/pixel-format#mono-formats)
 - Exposure Time 29.0 microseconds
@@ -23,7 +23,7 @@
 
 ## Week 5
 
-### Basler ace U acA2440-35um
+### Basler ace U acA2440-35uc
 - resolution: 2456x2052
 - Pixel Format: RGB8
 - Exposure Time 29.0 microseconds
@@ -126,7 +126,7 @@ with b = brightness.
 
 ## Week 7
 
-### Basler ace U acA2440-35um
+### Basler ace U acA2440-35uc
 - resolution: 2456x2052
 - Pixel Format: BayerRG12
 - Exposure Time 29.0 microseconds
@@ -214,4 +214,17 @@ These measurements yield the same results, but the peaks are harder to spot as t
 ![trust_regression](Code/brightness_regression/trust/visual_week7_brightness_regression.png)
 
 $E(\text{keV}) = (0.0098 \pm 0.0013)b + (8.6 \pm 1.0)$
+
+## Week 7
+
+### Basler ace U acA2440-35uc
+- resolution: 2456x2052
+- Pixel Format: BayerRG12
+- Exposure Time 15000.0 microseconds
+- FPS: 35.7
+- Gain: 13 dB
+- Record a frame every 21 Milliseconds
+- Stop recording after: 4 seconds
+- Output format: Bitmap
+- Recording buffer size: 100 frames
 

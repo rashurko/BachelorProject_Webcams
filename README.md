@@ -226,5 +226,5 @@ $E(\text{keV}) = (0.0098 \pm 0.0013)b + (8.6 \pm 1.0)$
 - Record a frame every 21 Milliseconds
 - Stop recording after: 4 seconds
 - Output format: Bitmap
-- Recording buffer size: 100 frames
+- Recording buffer size: 500 frames
 

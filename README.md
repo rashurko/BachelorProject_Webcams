@@ -250,4 +250,10 @@ $E(\text{keV}) = (0.0098 \pm 0.0013)b + (8.6 \pm 1.0)$
 #### Transmission and attenuation
 - l = (32 $\pm$ 1) cm
 
+### Trust
+- Stop recording after 10 seconds
+
+#### Transmission and attenuation
+- l = (38 $\pm$ 1) cm
+
 

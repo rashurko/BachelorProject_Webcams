@@ -215,7 +215,7 @@ These measurements yield the same results, but the peaks are harder to spot as t
 
 $E(\text{keV}) = (0.0098 \pm 0.0013)b + (8.6 \pm 1.0)$
 
-## Week 7
+## Week 8
 
 ### Basler ace U acA2440-35uc
 - resolution: 2456x2052
@@ -232,5 +232,22 @@ $E(\text{keV}) = (0.0098 \pm 0.0013)b + (8.6 \pm 1.0)$
 - l = (41 $\pm$ 1) cm
 
 #### Reflection
+
+
+## Week 10
+
+### Basler ace U acA2440-35uc
+- resolution: 2456x2052
+- Pixel Format: BayerRG12
+- Exposure Time 300.0 microseconds
+- FPS: 35.7
+- Gain: 13 dB
+- Record a frame every 21 Milliseconds
+- Stop recording after: 4 seconds
+- Output format: Bitmap
+- Recording buffer size: 500 frames
+
+#### Transmission and attenuation
+- l = (32 $\pm$ 1) cm
 
 
